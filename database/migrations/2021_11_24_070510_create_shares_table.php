@@ -16,6 +16,7 @@ class CreateSharesTable extends Migration
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
             $table->string('share');
+            $table->integer('user_id');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

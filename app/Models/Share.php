@@ -12,8 +12,14 @@ class Share extends Model
     protected $guarded = array('id');
 
     protected $fillable = [
-        'share'
+        'share',
+        'user_id',
     ];
+
+    public function User()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 
     public function comments()
     {
