@@ -8,5 +8,5 @@ use App\Http\Controllers\ShareController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('/v1/share',ShareController::class);
 Route::apiResource('/v1/user',UserController::class);
+Route::apiResource('/v1/share',ShareController::class);

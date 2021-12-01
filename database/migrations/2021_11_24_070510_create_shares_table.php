@@ -13,12 +13,15 @@ class CreateSharesTable extends Migration
      */
     public function up()
     {
+        //Shareテーブル
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
             $table->string('share');
-            $table->integer('user_id');
-            $table->timestamp('created_at')->useCurrent()->nullable();
-            $table->timestamp('updated_at')->useCurrent()->nullable();
+            $table->string('user_uid')->nullable();//nullableは仮
+            $table->timestamps();
+
+            //外部キー制約
+            $table->foreign('user_uid')->references('uid')->on('users')->onDelete('cascade');
         });
     }
 
