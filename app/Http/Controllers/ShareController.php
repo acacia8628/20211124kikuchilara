@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Share;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ShareController extends Controller
@@ -29,7 +30,17 @@ class ShareController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Share::create($request->all());
+        //$item = Share::create($request->all());
+        //$user = User::all()->where('uid','=',$request->uid)->first();
+        //$user = User::whereHas('User',function($q){
+        //    $q->where('uid',$request->uid);
+        //})->first();
+        $uid = $request->input('uid');
+        $user = User::all()->where('uid','=',$uid)->first();
+        $item = Share::create([
+            'share' => $request->share,
+            'user_id' => $user->id,
+        ]);
         return response()->json([
             'data' => $item
         ],201);

@@ -17,11 +17,8 @@ class CreateSharesTable extends Migration
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
             $table->string('share');
-            $table->string('user_uid')->nullable();//nullableは仮
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-
-            //外部キー制約
-            $table->foreign('user_uid')->references('uid')->on('users')->onDelete('cascade');
         });
     }
 

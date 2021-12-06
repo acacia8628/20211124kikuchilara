@@ -17,6 +17,8 @@ class User extends Model
      *
      * @var string[]
      */
+    protected $guarded = array('id');
+
     protected $fillable = [
         'name',
         'uid',
@@ -25,5 +27,10 @@ class User extends Model
     public function Shares()
     {
         return $this->hasMany('App\Models\Share');
+    }
+
+    public function Likes()
+    {
+        return $this->hasMany('App\Models\Like');
     }
 }
