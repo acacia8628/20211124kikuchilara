@@ -29,6 +29,11 @@ class User extends Model
         return $this->hasMany('App\Models\Share');
     }
 
+    public function Comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
     public function Likes()
     {
         return $this->hasMany('App\Models\Like');
