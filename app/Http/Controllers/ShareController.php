@@ -16,7 +16,7 @@ class ShareController extends Controller
      */
     public function index()
     {
-        $items = Share::all();
+        $items = Share::with(['user:id,name'])->get();
         return response()->json([
             'data' => $items
         ],200);
@@ -30,11 +30,6 @@ class ShareController extends Controller
      */
     public function store(Request $request)
     {
-        //$item = Share::create($request->all());
-        //$user = User::all()->where('uid','=',$request->uid)->first();
-        //$user = User::whereHas('User',function($q){
-        //    $q->where('uid',$request->uid);
-        //})->first();
         $uid = $request->input('uid');
         $user = User::all()->where('uid','=',$uid)->first();
         $item = Share::create([

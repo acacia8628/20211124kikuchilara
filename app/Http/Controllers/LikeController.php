@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Share;
+use App\Models\User;
 use App\Models\Like;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,7 @@ class LikeController extends Controller
      */
     public function index()
     {
-        //
+         
     }
 
     /**
@@ -25,7 +27,19 @@ class LikeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $uid = $request->input('uid');
+        $id = $request->input('id');
+
+        $user = User::all()->where('uid','=',$uid)->first();
+        $share = Share::all()->where('id','=',$id)->first();
+
+        $item = Like::create([
+            'user_id' => $user->id,
+            'share_id' => $share->id,
+        ]);
+        return response()->json([
+            'data' => $item
+        ],201);
     }
 
     /**
@@ -57,8 +71,24 @@ class LikeController extends Controller
      * @param  \App\Models\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Like $like)
+    public function destroy(Request $request, Like $like)
     {
-        //
+        $uid = $request->input('uid');
+        //$id = $request->input('id');
+
+        $user = User::all()->where('uid','=',$uid)->first();
+        //$share = Share::all()->where('id','=',$id)->first();
+
+        $item = Like::where('user_id',$user->id)->where('share_id',$share->id)->first();
+        $item->delete();
+        if($item){
+            return response()->json([
+                'user_id' => 'Deleted successfully',
+            ],200);
+        } else {
+            return response()->json([
+                'user_id' => 'Not found',
+            ],404);
+        }
     }
 }
