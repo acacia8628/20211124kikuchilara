@@ -71,14 +71,13 @@ class LikeController extends Controller
      * @param  \App\Models\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Like $like)
+    public function destroy(Request $request)
     {
         $uid = $request->input('uid');
         $id = $request->input('id');
 
         $user = User::all()->where('uid','=',$uid)->first();
         $share = Share::all()->where('id','=',$id)->first();
-        logger('share_log',['share' => $share]);
 
         $item = Like::where('user_id',$user->id)->where('share_id',$share->id)->first();
         $item->delete();
