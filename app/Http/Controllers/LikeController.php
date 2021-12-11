@@ -16,7 +16,10 @@ class LikeController extends Controller
      */
     public function index()
     {
-         
+        $items = Like::with(['user:id,uid'])->get();
+        return response()->json([
+            'data' => $items
+        ], 200);
     }
 
     /**
