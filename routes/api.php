@@ -12,7 +12,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::apiResource('/v1/user',UserController::class);
 Route::apiResource('/v1/share',ShareController::class);
-Route::apiResource('/v1/comment',CommentController::class);
+Route::apiResource('/v1/comment',CommentController::class)->only([
+  'index','store','destory',
+]);
 Route::apiResource('/v1/like',LikeController::class)->only([
   'index', 'store', 'destroy'
 ]);

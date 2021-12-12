@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,7 +15,10 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $items = Comment::with(['user:id,uid,name'])->get();
+        return response()->json([
+            'data' => $items
+        ], 200);
     }
 
     /**
@@ -25,7 +29,15 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $uid = $request->input('uid');
+        $user = User::all()->where('uid','=',$uid)->first();
+        $item = Comment::create([
+            'comment' => $request->comment,
+            'user_id' => $user->id,
+        ]);
+        return response()->json([
+            'data' => $item
+        ],201);
     }
 
     /**
