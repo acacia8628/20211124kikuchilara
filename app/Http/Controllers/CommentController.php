@@ -16,16 +16,7 @@ class CommentController extends Controller
      */
     public function index(Comment $comment)
     {
-        $item = Share::with("user","comments")->find($comment);
-        if($item){
-            return response()->json([
-                'data' => $item
-            ],200);
-        } else {
-            return response()->json([
-                'share' => 'Not found',
-            ],404);
-        }
+        //
     }
 
     /**
@@ -56,7 +47,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        $item = Share::with("user","comments")->find($comment);
+        $item = Share::with("comments.user")->find($comment);
         if($item){
             return response()->json([
                 'data' => $item
@@ -88,6 +79,15 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $item = Comment::where('id',$comment->id)->delete();
+        if($item){
+            return response()->json([
+                'comment' => 'Deleted successfully',
+            ],200);
+        } else {
+            return response()->json([
+                'comment' => 'Not found',
+            ],404);
+        }
     }
 }
