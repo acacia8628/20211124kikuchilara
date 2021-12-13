@@ -33,6 +33,7 @@ class CommentController extends Controller
         $user = User::all()->where('uid','=',$uid)->first();
         $item = Comment::create([
             'comment' => $request->comment,
+            'share_id' => $request->id,
             'user_id' => $user->id,
         ]);
         return response()->json([
