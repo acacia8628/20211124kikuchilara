@@ -45,16 +45,16 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show($comment)
     {
-        $item = Comment::with(['user'])->where('share_id',$comment->id)->get();
+        $item = Comment::with(['user'])->where('share_id',$comment)->get();
         if($item){
             return response()->json([
                 'data' => $item
             ],200);
         } else {
             return response()->json([
-                'share' => 'Not found',
+                'comment' => 'Not found',
             ],404);
         }
     }
