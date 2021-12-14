@@ -14,9 +14,19 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Comment $comment)
+    public function index(Request $request)
     {
-        //
+        logger('######',['request' => $request->shareId]);
+        $item = Share::with("comments.user")->find($request->shareId);
+        if($item){
+            return response()->json([
+                'data' => $item
+            ],200);
+        } else {
+            return response()->json([
+                'share' => 'Not found',
+            ],404);
+        }
     }
 
     /**
@@ -47,7 +57,8 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        $item = Share::with("comments.user")->find($comment);
+        $item = Comment::with(['user'])->where('share_id',$comment->id)->get();
+        logger('#######',['comment' => $item]);
         if($item){
             return response()->json([
                 'data' => $item
